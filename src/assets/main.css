@@ -1,0 +1,15 @@
+/* src/assets/main.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  background-color: #1b1b1f;
+  color: powderblue;
+  min-height: 100vh;
+}
