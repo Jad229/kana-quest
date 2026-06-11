@@ -1,7 +1,32 @@
-<script></script>
+<script setup></script>
 <template>
-  <h1>Kana Quest</h1>
-  <p>Learn Japanese 1 Flashcard at a time!</p>
-  <button>START!</button>
+  <div class="container">
+    <h1 class="title">Kana Quest</h1>
+    <p class="subtext">Learn Japanese one flashcard at a time!</p>
+    <button class="btn start">START!</button>
+  </div>
 </template>
-<style></style>
+<style scoped>
+.container {
+  display: grid;
+  gap: 25px;
+  justify-items: center;
+  align-items: center;
+}
+
+.title {
+  font-size: 4rem;
+}
+
+.subtext {
+  font-size: 1.5rem;
+}
+
+.btn.start {
+  width: 200px;
+  height: 50px;
+  background-color: palegoldenrod;
+  border: none;
+  border-radius: 5px;
+}
+</style>
