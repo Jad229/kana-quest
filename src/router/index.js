@@ -1,3 +1,5 @@
+import QuizView from '@/views/QuizView.vue'
+import ResultsView from '@/views/ResultsView.vue'
 import StartView from '@/views/StartView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -8,6 +10,16 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: StartView
+    },
+    {
+      path: '/quiz',
+      name: 'quiz',
+      component: QuizView
+    },
+    {
+      path: '/results',
+      name: 'results',
+      component: ResultsView
     },
   ],
 })
