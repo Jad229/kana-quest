@@ -14,8 +14,11 @@ function handleStart(mode) {
   <div class="container">
     <h1 class="title">Kana Quest</h1>
     <p class="subtext">Learn Japanese one flashcard at a time!</p>
+
     <button @click="handleStart('flash')" class="btn start">Flash Cards</button>
+    <p class="subtext">In Flash Card mode click on the question to reveal the answer</p>
     <button @click="handleStart('quiz')" class="btn start">Quiz!</button>
+    <p class="subtext">In Quiz mode click on an answer to move forward</p>
   </div>
 </template>
 <style scoped>

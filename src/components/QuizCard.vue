@@ -7,7 +7,7 @@ const quizStore = useQuizStore()
 function checkAnswer(option) {
   quizStore.checkAnswer(option)
 
-  setTimeout(() => quizStore.nextCard(), 2000)
+  setTimeout(() => quizStore.nextCard(), 500)
 }
 
 function getButtonFeedback(option) {
@@ -38,40 +38,50 @@ function getButtonFeedback(option) {
 .quizcard {
   background-color: var(--dark-bg-elevated);
   width: 500px;
-  height: 300px;
+  min-height: 300px;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .quizcard .body {
+  flex: 3;
   font-size: 2rem;
   font-weight: bold;
   text-align: center;
-  padding-block: 100px;
-  height: 80%;
+  padding: 2em;
   width: 100%;
   border-bottom: 1px solid black;
 }
 
 .quizcard .footer {
+  flex: 1;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  height: 20%;
+  flex-wrap: wrap;
+  gap: 1em;
+  padding: 1em;
   width: 100%;
 }
 
 .btn {
-  display: grid;
+  display: flex;
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 0.85rem;
   color: black;
   background-color: powderblue;
   border: none;
   border-radius: 10px;
-  width: 75px;
-  height: 60%;
+  flex: 1;
+  min-width: 0;
+  max-width: 45%;
+  height: 40px;
+  padding: 4px 8px;
+  text-align: center;
+  word-break: break-word;
 }
 
 .correct {

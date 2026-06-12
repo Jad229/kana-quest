@@ -17,7 +17,6 @@ export const useQuizStore = defineStore('quiz', () => {
   const results = ref([])
 
   // actions
-
   function startQuiz(mode) {
     score.value = 0
     selectedAnswer.value = null
@@ -27,7 +26,7 @@ export const useQuizStore = defineStore('quiz', () => {
   }
 
   function nextCard() {
-    if (currentIndex.value < allCards.value.length - 1) {
+    if (currentIndex.value < totalCards.value - 1) {
       currentIndex.value++
       selectedAnswer.value = null
     }
@@ -50,15 +49,15 @@ export const useQuizStore = defineStore('quiz', () => {
 
   function checkAnswer(selectedChoice) {
     selectedAnswer.value = selectedChoice
-    const correct = selectedAnswer.value === correctAnswer
+    const isCorrect = selectedAnswer.value === correctAnswer.value
 
-    if (correct) {
+    if (isCorrect) {
       score.value++
     }
 
     results.value.push({
       question: currentCard.value.question,
-      correct,
+      isCorrect,
       selected: selectedAnswer.value,
       correctAnswer: correctAnswer
     })
@@ -67,13 +66,14 @@ export const useQuizStore = defineStore('quiz', () => {
 
   // getters
   const currentCard = computed(() => allCards.value[currentIndex.value])
-  const progress = computed(() => Math.round((currentIndex.value / allCards.value.length) * 100))
   const correctAnswer = computed(() => currentCard.value.answer)
+  const totalCards = computed(() => allCards.value.length)
+  const progress = computed(() => Math.round((currentIndex.value / totalCards.value) * 100))
 
   watch(phase, (newVal) => {
     const path = newVal === 'flash' || newVal === 'quiz' ? 'quiz' : newVal
     router.push({ name: path })
   }, { immediate: true })
-  return { score, allCards, phase, currentIndex, selectedAnswer, results, startQuiz, nextCard, prevCard, checkAnswer, currentCard, progress }
+  return { score, allCards, phase, currentIndex, selectedAnswer, results, startQuiz, nextCard, prevCard, checkAnswer, currentCard, progress, correctAnswer, totalCards }
 })
 
