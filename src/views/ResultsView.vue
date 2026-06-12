@@ -1,3 +1,3 @@
 <script setup></script>
-<template></template>
+<template><h1>RESULTS</h1></template>
 <style scoped></style>

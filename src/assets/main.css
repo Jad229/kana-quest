@@ -1,4 +1,9 @@
-/* src/assets/main.css */
+:root {
+  --dark-bg: #1b1b1f;
+  --dark-bg-text: powderblue;
+  --dark-bg-elevated: #213547;
+}
+
 * {
   margin: 0;
   padding: 0;

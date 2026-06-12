@@ -1,9 +1,21 @@
-<script setup></script>
+<script setup>
+import { useQuizStore } from '@/stores/useQuizStore.js'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const quizStore = useQuizStore()
+
+function handleStart(mode) {
+  quizStore.startQuiz(mode)
+  router.push('quiz')
+}
+</script>
 <template>
   <div class="container">
     <h1 class="title">Kana Quest</h1>
     <p class="subtext">Learn Japanese one flashcard at a time!</p>
-    <button class="btn start">START!</button>
+    <button @click="handleStart('flash')" class="btn start">Flash Cards</button>
+    <button @click="handleStart('quiz')" class="btn start">Quiz!</button>
   </div>
 </template>
 <style scoped>
