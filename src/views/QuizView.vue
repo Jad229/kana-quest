@@ -1,6 +1,7 @@
 <script setup>
 import FlashCard from '@/components/FlashCard.vue'
 import ProgressBar from '@/components/ProgressBar.vue'
+import QuizCard from '@/components/QuizCard.vue'
 import { useQuizStore } from '@/stores/useQuizStore.js'
 
 const quizStore = useQuizStore()
@@ -12,7 +13,8 @@ const quizStore = useQuizStore()
       <h1>{{ quizStore.phase }} Mode</h1>
       <ProgressBar />
     </div>
-    <FlashCard />
+    <FlashCard v-if="quizStore.phase === 'flash'" />
+    <QuizCard v-if="quizStore.phase === 'quiz'" />
   </div>
 </template>
 
