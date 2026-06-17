@@ -1,0 +1,66 @@
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+env/
+ENV/
+*.egg-info/
+.eggs/
+dist/
+build/
+*.egg
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Node / frontend
+node_modules/
+dist/
+dist-ssr/
+*.local
+.npm
+.eslintcache
+*.tsbuildinfo
+
+# Vite
+*.timestamp-*-*.mjs
+
+# SQLite (local dev databases)
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor (keep shared VS Code config)
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
