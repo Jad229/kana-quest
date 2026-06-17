@@ -14,6 +14,7 @@ export const useQuizStore = defineStore('quiz', () => {
   const currentIndex = ref(0)
   const selectedAnswer = ref(null)
   const results = ref([])
+  const history = ref([])
 
   // actions
   async function startQuiz(mode) {
@@ -30,6 +31,10 @@ export const useQuizStore = defineStore('quiz', () => {
     allCards.value = await response.json()
   }
 
+  async function fetchHistory() {
+    const response = await fetch('http://localhost:8000/results')
+    history.value = await response.json()
+  }
   async function saveResults() {
     const response = await fetch('http://localhost:8000/results', {
       method: 'POST',
@@ -97,6 +102,6 @@ export const useQuizStore = defineStore('quiz', () => {
     const path = newVal === 'flash' || newVal === 'quiz' ? 'quiz' : newVal
     router.push({ name: path })
   }, { immediate: true })
-  return { score, allCards, phase, currentIndex, selectedAnswer, results, startQuiz, nextCard, prevCard, checkAnswer, currentCard, progress, correctAnswer, totalCards }
+  return { score, allCards, phase, currentIndex, selectedAnswer, results, startQuiz, nextCard, prevCard, checkAnswer, fetchHistory, history, currentCard, progress, correctAnswer, totalCards }
 })
 
