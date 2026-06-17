@@ -1,39 +1,47 @@
 <script setup>
 import { useQuizStore } from '@/stores/useQuizStore.js'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 
 const quizStore = useQuizStore()
 
 const width = computed(() => `${quizStore.progress}%`)
 </script>
+
 <template>
-  <div class="bar">
-    <div class="progress"></div>
-    <span class="position">{{ quizStore.currentIndex }}/{{ quizStore.totalCards }}</span>
+  <div class="progress-bar">
+    <div class="progress-fill" />
+    <span class="progress-label">{{ quizStore.progress }}%</span>
   </div>
 </template>
+
 <style scoped>
-.bar {
+.progress-bar {
   position: relative;
+  background: rgba(176, 224, 230, 0.08);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  height: 1.35rem;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: v-bind(width);
+  background: linear-gradient(90deg, #5a9e7a, var(--score-high));
+  border-radius: 6px;
+  transition: width 0.25s ease;
+}
+
+.progress-label {
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
-  margin-top: 10px;
-  background-color: white;
-  width: 100%;
-  height: 1.5em;
-  border-radius: 8px;
-  padding: 1px;
-}
-.progress {
-  background-color: lightgreen;
-  border-radius: 10px;
-  height: 90%;
-  width: v-bind(width);
-}
-.position {
-  position: absolute;
-  right: 15px;
-  font-weight: bold;
-  color: black;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: powderblue;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 </style>

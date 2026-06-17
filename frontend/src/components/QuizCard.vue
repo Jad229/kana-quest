@@ -1,94 +1,98 @@
 <script setup>
 import { useQuizStore } from '@/stores/useQuizStore.js'
-import { computed, ref } from 'vue'
 
 const quizStore = useQuizStore()
 
 function checkAnswer(option) {
   quizStore.checkAnswer(option)
-
   setTimeout(() => quizStore.nextCard(), 500)
 }
 
 function getButtonFeedback(option) {
   if (!quizStore.selectedAnswer) return
-  if (option === quizStore.currentCard.answer) return 'correct'
-  if (option === quizStore.selectedAnswer) return 'wrong'
+  if (option === quizStore.currentCard.answer) return 'choice--correct'
+  if (option === quizStore.selectedAnswer) return 'choice--wrong'
 }
 </script>
+
 <template>
-  <div class="quizcard">
-    <div class="body">
+  <div class="quiz-card panel">
+    <div class="quiz-question">
       {{ quizStore.currentCard.question }}
     </div>
-    <div class="footer">
+    <div class="quiz-choices">
       <button
-        class="choice btn"
-        :class="getButtonFeedback(option)"
-        @click="checkAnswer(option)"
         v-for="option in quizStore.currentCard.options"
-        :key="option.id"
+        :key="option"
+        class="choice"
+        :class="getButtonFeedback(option)"
+        :disabled="!!quizStore.selectedAnswer"
+        @click="checkAnswer(option)"
       >
         {{ option }}
       </button>
     </div>
   </div>
 </template>
+
 <style scoped>
-.quizcard {
-  background-color: var(--dark-bg-elevated);
-  width: 500px;
-  min-height: 300px;
-  border-radius: 10px;
+.quiz-card {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
-.quizcard .body {
-  flex: 3;
-  font-size: 2rem;
-  font-weight: bold;
+.quiz-question {
+  font-size: clamp(2rem, 6vw, 2.75rem);
+  font-weight: 700;
   text-align: center;
-  padding: 2em;
-  width: 100%;
-  border-bottom: 1px solid black;
+  padding: 2.5rem 1.5rem;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
-.quizcard .footer {
-  flex: 1;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1em;
-  padding: 1em;
-  width: 100%;
+.quiz-choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  padding: 1.15rem;
 }
 
-.btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 0.85rem;
-  color: black;
-  background-color: powderblue;
-  border: none;
+.choice {
+  padding: 0.85rem 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: powderblue;
+  background: rgba(176, 224, 230, 0.06);
+  border: 1px solid var(--border-subtle);
   border-radius: 10px;
-  flex: 1;
-  min-width: 0;
-  max-width: 45%;
-  height: 40px;
-  padding: 4px 8px;
-  text-align: center;
-  word-break: break-word;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
 }
 
-.correct {
-  background-color: lightgreen;
+.choice:hover:not(:disabled) {
+  border-color: var(--border-mid);
+  background: rgba(176, 224, 230, 0.12);
 }
 
-.wrong {
-  background-color: lightcoral;
+.choice:disabled {
+  cursor: default;
+}
+
+.choice--correct {
+  background: rgba(125, 206, 160, 0.18);
+  border-color: var(--score-high);
+  color: var(--score-high);
+}
+
+.choice--wrong {
+  background: rgba(232, 160, 160, 0.15);
+  border-color: var(--score-low);
+  color: var(--score-low);
+}
+
+@media (max-width: 420px) {
+  .quiz-choices {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

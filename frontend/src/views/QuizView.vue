@@ -3,40 +3,61 @@ import FlashCard from '@/components/FlashCard.vue'
 import ProgressBar from '@/components/ProgressBar.vue'
 import QuizCard from '@/components/QuizCard.vue'
 import { useQuizStore } from '@/stores/useQuizStore.js'
+import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 
 const quizStore = useQuizStore()
+
+const modeLabel = computed(() =>
+  quizStore.phase === 'flash' ? 'Flash Cards' : 'Quiz',
+)
 </script>
 
 <template>
-  <div class="container">
-    <div class="header">
-      <h1>{{ quizStore.phase }} Mode</h1>
+  <div class="page quiz-page">
+    <header class="quiz-header">
+      <RouterLink class="nav-link" to="/">← Home</RouterLink>
+      <div class="quiz-title-block">
+        <p class="section-label">{{ modeLabel }}</p>
+        <h1 class="quiz-title">
+          {{ quizStore.currentIndex + 1 }}
+          <span class="quiz-title-sep">/</span>
+          {{ quizStore.totalCards }}
+        </h1>
+      </div>
       <ProgressBar />
-    </div>
+    </header>
+
     <FlashCard v-if="quizStore.phase === 'flash'" />
     <QuizCard v-if="quizStore.phase === 'quiz'" />
-    <router-link class="nav btn" to="/">Home</router-link>
   </div>
 </template>
 
 <style scoped>
-.container {
+.quiz-page {
+  gap: 1.25rem;
+}
+
+.quiz-header {
   display: grid;
-  gap: 20px;
+  gap: 1rem;
 }
 
-h1 {
-  text-transform: capitalize;
-}
-
-.nav.btn {
-  text-decoration: none;
-  color: black;
-  width: 100px;
+.quiz-title-block {
   text-align: center;
-  background-color: powderblue;
-  padding: 1em;
-  border-radius: 10px;
+}
+
+.quiz-title {
+  font-size: clamp(1.75rem, 5vw, 2.25rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-top: 0.25rem;
+}
+
+.quiz-title-sep {
+  color: var(--text-muted);
+  font-weight: 400;
 }
 </style>

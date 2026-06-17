@@ -23,48 +23,86 @@ function prev() {
   showAnswer.value = false
 }
 </script>
+
 <template>
-  <div class="flashcard">
-    <div @click="flipCard" class="body">
-      <p>{{ cardText }}</p>
-    </div>
-    <div class="footer">
-      <button @click="prev" class="btn">Prev</button>
-      <button @click="next" class="btn">Next</button>
+  <div class="flash-card panel">
+    <button class="flash-body" @click="flipCard">
+      <p class="flash-text">{{ cardText }}</p>
+      <span class="flash-hint">{{ showAnswer ? 'Tap to hide' : 'Tap to reveal' }}</span>
+    </button>
+    <div class="flash-footer">
+      <button class="flash-btn" @click="prev">Prev</button>
+      <button class="flash-btn flash-btn--primary" @click="next">Next</button>
     </div>
   </div>
 </template>
+
 <style scoped>
-.flashcard {
-  background-color: var(--dark-bg-elevated);
-  width: 500px;
-  height: 300px;
-  border-radius: 10px;
-}
-
-.flashcard .body {
-  font-size: 2rem;
-  font-weight: bold;
-  text-align: center;
-  padding-block: 100px;
-  height: 80%;
-  width: 100%;
-  border-bottom: 1px solid black;
-}
-
-.flashcard .footer {
+.flash-card {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-  height: 20%;
-  width: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 280px;
 }
 
-.btn {
-  background-color: powderblue;
+.flash-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2.5rem 1.5rem;
+  background: none;
   border: none;
+  border-bottom: 1px solid var(--border-subtle);
+  color: powderblue;
+  cursor: pointer;
+  min-height: 220px;
+}
+
+.flash-text {
+  font-size: clamp(2rem, 6vw, 2.75rem);
+  font-weight: 700;
+}
+
+.flash-hint {
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.flash-footer {
+  display: flex;
+  gap: 0.65rem;
+  padding: 1rem 1.15rem;
+}
+
+.flash-btn {
+  flex: 1;
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: powderblue;
+  background: rgba(176, 224, 230, 0.06);
+  border: 1px solid var(--border-subtle);
   border-radius: 10px;
-  width: 75px;
-  height: 60%;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.flash-btn:hover {
+  border-color: var(--border-mid);
+  background: rgba(176, 224, 230, 0.12);
+}
+
+.flash-btn--primary {
+  border-color: rgba(238, 232, 170, 0.3);
+}
+
+.flash-btn--primary:hover {
+  border-color: var(--accent-gold);
+  background: rgba(238, 232, 170, 0.08);
 }
 </style>
