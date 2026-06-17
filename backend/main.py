@@ -29,6 +29,25 @@ def get_cards():
         })
     return cards
 
+@app.get('/results')
+def get_results():
+    conn = get_connection()
+    rows = conn.execute('SELECT * FROM results ORDER BY date DESC').fetchall()
+    conn.close()
+    
+    results = []
+    for row in rows:
+        results.append({
+            "id": row["id"],
+            "date": row["date"],
+            "score": row["score"],
+            "total": row["total"],
+            "answers": json.loads(row["answers"])
+        })
+
+    return results
+
+
 @app.post('/results')
 def save_result(result: dict):
     conn = get_connection()

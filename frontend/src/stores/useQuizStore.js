@@ -30,7 +30,23 @@ export const useQuizStore = defineStore('quiz', () => {
     allCards.value = await response.json()
   }
 
-  function nextCard() {
+  async function saveResults() {
+    const response = await fetch('http://localhost:8000/results', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ score: score.value, total: totalCards.value, answers: results.value })
+    })
+    if (!response.ok) {
+      throw new Error('Failed to save results')
+    }
+    else {
+      console.log('Results saved successfully')
+    }
+  }
+
+  async function nextCard() {
     if (currentIndex.value < totalCards.value - 1) {
       currentIndex.value++
       selectedAnswer.value = null
@@ -38,8 +54,10 @@ export const useQuizStore = defineStore('quiz', () => {
     else
       if (phase.value === 'flash')
         phase.value = 'start'
-      else
+      else {
         phase.value = 'results'
+        await saveResults()
+      }
   }
 
   function prevCard() {
