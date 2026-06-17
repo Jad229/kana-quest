@@ -17,9 +17,6 @@ def get_cards():
     conn = get_connection()
     rows = conn.execute('SELECT * FROM cards').fetchall()
     conn.close()
-    # rows is a list of tuples like (1, 'question...', 'answer', '["a","i"]', 'category')
-    # your job: turn this into a list of dictionaries that looks like
-    # { "id": 1, "question": "...", "answer": "...", "options": ["a","i"], "category": "..." }
 
     cards = []
     for row in rows:
