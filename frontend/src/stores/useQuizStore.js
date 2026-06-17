@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import { computed, ref, watch } from 'vue';
-import { cards } from '@/data/cards.js';
 import { useRouter } from 'vue-router';
 
 
@@ -10,19 +9,25 @@ export const useQuizStore = defineStore('quiz', () => {
 
   // state
   const score = ref(0)
-  const allCards = ref(cards)
+  const allCards = ref([])
   const phase = ref('start') // start | flash | quiz | results
   const currentIndex = ref(0)
   const selectedAnswer = ref(null)
   const results = ref([])
 
   // actions
-  function startQuiz(mode) {
+  async function startQuiz(mode) {
+    await fetchCards()
     score.value = 0
     selectedAnswer.value = null
     currentIndex.value = 0
     results.value = []
     phase.value = mode
+  }
+
+  async function fetchCards() {
+    const response = await fetch('http://localhost:8000/cards')
+    allCards.value = await response.json()
   }
 
   function nextCard() {
@@ -59,7 +64,7 @@ export const useQuizStore = defineStore('quiz', () => {
       question: currentCard.value.question,
       isCorrect,
       selected: selectedAnswer.value,
-      correctAnswer: correctAnswer
+      correctAnswer: correctAnswer.value
     })
   }
 
