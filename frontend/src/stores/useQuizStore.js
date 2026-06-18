@@ -2,8 +2,6 @@ import { defineStore } from 'pinia';
 import { computed, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
-
-
 export const useQuizStore = defineStore('quiz', () => {
   const router = useRouter();
 
@@ -35,6 +33,7 @@ export const useQuizStore = defineStore('quiz', () => {
     const response = await fetch('http://localhost:8000/results')
     history.value = await response.json()
   }
+
   async function saveResults() {
     const response = await fetch('http://localhost:8000/results', {
       method: 'POST',
